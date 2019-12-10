@@ -1,5 +1,8 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/css/style.css' %}"></link>
+
 {% if latest_question_list %}
-    <ul>
+    <ul class="home-bg">
     {% for question in latest_question_list %}
         {% comment %} <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li> {% endcomment %}
         <li><a href="{% url 'polls:detail' question.id%}">{{ question.question_text }}</a></li>

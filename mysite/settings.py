@@ -122,4 +122,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+'''
+    静态资源将利用STATICFILES_FINDERS指定的搜索器搜索路径下面的STATIC_URL指定目录。STATICFILES_FINDERS默认依次包含：
+        FileSystemFinder：在文件系统里搜索STATICFILES_DIRS指定目录。默认不包含任何目录
+        AppDirectoriesFinder：搜索INSTALLED_APPS注册过的应用目录
+    因此，使用入门级配置的正常情况下就是在project注册app，然后在app目录下存放static目录,或通过STATICFILES_DIRS参数
+    指定
+
+'''
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_URL = '/static/'
