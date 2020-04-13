@@ -1,3 +1,9 @@
+vscodesettings token 31e7c9541b3ce2dcbc9afdae307e0fe1db23920d
+
+settings sync 自动同步vscode插件配置
+参考https://blog.csdn.net/qq_34846662/article/details/99476862
+gist id 767fc6caa9eb51f4eca8d08a5c811428
+token id ba048871d15b18c01af6236bc42bb9867d225a45
 1、新建项目 
     安装django： pip install Django
         验证：>>> import django
