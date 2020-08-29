@@ -6,15 +6,15 @@ gist id 767fc6caa9eb51f4eca8d08a5c811428
 token id ba048871d15b18c01af6236bc42bb9867d225a45
 1、新建项目 
     python mamange.py startapp polls，
-    并把polls.apps.PollsConfig加入到INSTALLED_APPS 配置中
+    并把polls.apps.PollsConfig加入到settings里的INSTALLED_APPS 配置中
 2、在models中新建模型类，（修改模型类后同步数据库也是这几个步骤）
     1）执行 python manage.py makemigrations polls 会生成迁移文件 polls/migrations/0001_initial.py
-        配置数据库是还要在__init__中初始化
+        配置数据库时还要在__init__（project）中初始化
             import pymysql
             pymysql.install_as_MySQLdb()
         如果报：django.core.exceptions.ImproperlyConfigured: mysqlclient 1.3.3 or newer is required; you have 0.7.11.None
             解决办法：
-                找到Python安装路劲下的Python36-32\Lib\site-packages\django\db\backends\mysql\base.py文件将文件中的如下代码注释
+                找到Python安装路径下的Python36-32\Lib\site-packages\django\db\backends\mysql\base.py文件将文件中的如下代码注释
                 if version < (1, 3, 3):
                     raise ImproperlyConfigured("mysqlclient 1.3.3 or newer is required; you have %s" % Database.__version__)
                 注释即可；
@@ -25,7 +25,7 @@ token id ba048871d15b18c01af6236bc42bb9867d225a45
     2）查询迁移文件所执行的sql：python manage.py sqlmigrate polls 0001， 可以显示建表的sql代码
     3）执行迁移文件：python manage.py migrate
 3、Django常用模型操作：
-    1）参数
+    1）参数选项
         default: 默认
         null ：设置是否为空，针对数据库中该字段是否可以为空
         blank ：设置是否为空，针对表单提交该字段是否可以为空
@@ -33,7 +33,7 @@ token id ba048871d15b18c01af6236bc42bb9867d225a45
         unique：唯一
     2）操作：
         查询单个数据：first() last() count() exists()
-        限制查询集：相当于sql中的limit，模型名.objects.all()[0:5] 小标不能为负数
+        限制查询集：相当于sql中的limit，模型名.objects.all()[0:5] 下标不能为负数
         字段查询：对sql中的where实现，作为方法filter(),exclude()，get()的参数
             属性名称__比较运算符 = 值
             一对多或多对多关系的可以使用 实体名__属性名__比较运算符，这里的实体名为一的关系；
@@ -46,7 +46,7 @@ token id ba048871d15b18c01af6236bc42bb9867d225a45
             in：是否包含在范围内。filter(id__in=[1,2,3])
             gt，gte，lt，lte：大于，大于等于，小于，小于等于。filter(age__gt=10)
             pk：代表主键，也就是id。filter(pk=1)
-        聚合函数：ggregate()函数返回聚合函数的值，Avg，Count，Max，Min，Sum
+        聚合函数：aggregate()函数返回聚合函数的值，Avg，Count，Max，Min，Sum
             Student.objects.aggregate(Max('age'))
         F对象：可以使用模型的A属性与B属性进行比较
             Grade.objects.filter(girlnum__gt=F('boynum'))：统计女生数大于男生数的班级
@@ -134,7 +134,8 @@ token id ba048871d15b18c01af6236bc42bb9867d225a45
     1）字段选项： 
         max_length（varchar),
         null,
-        blank, null 选项仅仅是数据库层面的设置，然而 blank 是涉及表单验证方面。如果一个字段设置为 blank=True ，在进行表单验证时，接收的数据该字段值允许为空，而设置为 blank=False 时，不允许为空。
+        blank, null 选项仅仅是数据库层面的设置，然而 blank 是涉及表单验证方面。如果一个字段设置为 blank=True ，
+            在进行表单验证时，接收的数据该字段值允许为空，而设置为 blank=False 时，不允许为空。
         choices,接收一个可迭代的列表或元组（基本单位为二元组）。如果指定了该参数，在实例化该模型时，该字段只能取选项列表中的值。
             每个二元组的第一个值会储存在数据库中，而第二个值将只会用于显示作用,使用 get_xxx_display() 方法获取显示名
             class Person(models.Model):
