@@ -7,6 +7,16 @@ token id ba048871d15b18c01af6236bc42bb9867d225a45
 1、新建项目 
     python mamange.py startapp polls，
     并把polls.apps.PollsConfig加入到settings里的INSTALLED_APPS 配置中
+    安装django： pip install Django
+        验证：>>> import django
+                >>> print(django.get_version())
+    创建项目：
+        django-admin startproject mysite
+    开发的简易服务器：
+        python manage.py runserver
+    创建应用：
+        python mamange.py startapp polls，
+        并把polls.apps.PollsConfig加入到INSTALLED_APPS 配置中
 2、在models中新建模型类，（修改模型类后同步数据库也是这几个步骤）
     1）执行 python manage.py makemigrations polls 会生成迁移文件 polls/migrations/0001_initial.py
         配置数据库时还要在__init__（project）中初始化
